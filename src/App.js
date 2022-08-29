@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
 
-function App() {
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import BasicLayout from "./components/BasicLayout";
+import { blue } from "@mui/material/colors";
+import FormDemo from "./pages/formikForm";
+import ReactHookFormDemo from "./pages/reactHookForm";
+import { HistoryRouter, history } from "./utils/history";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: blue[600],
+    },
+  },
+});
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <HistoryRouter history={history}>
+        <BasicLayout>
+          <Routes>
+            <Route path="/" element={<FormDemo />} />
+            <Route index path="/formik" element={<FormDemo />} />
+            <Route path="/reactHookForm" element={<ReactHookFormDemo />} />
+          </Routes>
+        </BasicLayout>
+      </HistoryRouter>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
